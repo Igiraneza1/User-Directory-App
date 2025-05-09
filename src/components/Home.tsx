@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User } from '../types/user';
+import User from '../components/User';  
 
 function Home() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
@@ -18,7 +18,7 @@ function Home() {
       <ul>
         {users.map(user => (
           <li key={user.id}>
-            <strong>{user.name}</strong> - {user.email}
+            <User name={user.name} email={user.email} />
             <Link to={`/users/${user.id}`}> View Profile </Link>
           </li>
         ))}
