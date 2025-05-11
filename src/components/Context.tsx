@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { User } from './user';
+import type { User } from '../components/User';
 
 type Action = 
   | { type: 'ADD_USER'; payload: User } 
@@ -37,4 +37,4 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useUserContext = () => useContext(UserContext);
+export const Context = () => useContext(UserContext);

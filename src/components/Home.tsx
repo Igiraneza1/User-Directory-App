@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import User from '../components/User';  
+import type {User} from '../components/User';  
 
 function Home() {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')

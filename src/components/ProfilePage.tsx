@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import User from '../components/User';
+import type {User} from '../components/User';
 
 function ProfilePage() {
   const { id } = useParams<{ id: string }>();
@@ -34,8 +34,8 @@ function ProfilePage() {
       <p><strong>Email:</strong> {user.email}</p>
       <p><strong>Phone:</strong> {user.phone}</p>
       <p><strong>Website:</strong> {user.website}</p>
-      <p><strong>Company:</strong> {user.company.name}</p>
-      <p><strong>Address:</strong> {user.address.street}, {user.address.city}, {user.address.zipcode}</p>
+      <p><strong>Company:</strong> {user.company}</p>
+      <p><strong>Address:</strong> {user.address}</p>
     </div>
   );
 }

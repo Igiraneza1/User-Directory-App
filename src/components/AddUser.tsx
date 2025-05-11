@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Context from '../components/Context';
+import {Context} from '../components/Context';
 
 const schema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
@@ -26,8 +26,8 @@ function AddUser() {
   const [user, setUser] = useState<FormData | null>(null);
 
   const onSubmit = (data: FormData) => {
-    const newUser = { ...data, id: Date.now() }; // generate unique ID
-    dispatch({ type: 'ADD_USER', payload: newUser }); // ✅ add to global state
+    const newUser = { ...data, id: Date.now() }; 
+    dispatch({ type: 'ADD_USER', payload: newUser }); 
     setUser(data);
     alert('User added successfully');
   };
