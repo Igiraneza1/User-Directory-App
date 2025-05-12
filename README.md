@@ -1,89 +1,46 @@
-🧠 What the App Does (Overview)
-You're building a React + TypeScript app with 3 main features:
+# Getting Started with Create React App
 
-View a list of users — pulled from an API.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-View details of a specific user — using routing and dynamic URLs.
+## Available Scripts
 
-Add a new user — using a form with validation.
+In the project directory, you can run:
 
-🔧 Tools and Concepts You'll Use
-Feature	Tool/Concept
-Routing	React Router v6
-Forms	Controlled forms + React Hook Form
-Validation	Zod + React Hook Form
-State	useState, Context API, optionally useReducer
-Type Safety	TypeScript (interfaces, enums, types)
+### `npm start`
 
-📍 Step-by-Step Breakdown
-Step 1: Set Up the Project
-Use create-react-app with TypeScript template.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Install react-router-dom, react-hook-form, and zod.
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-Structure your project with folders like pages, components, context, and types.
+### `npm test`
 
-Step 2: Create Routes and Pages
-Use React Router to define these routes:
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-/: Home page – shows list of users
+### `npm run build`
 
-/users/:id: Profile page – shows details for one user
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-/add-user: Form to add a new user
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Each of these pages will be a separate React component.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Step 3: Build the Home Page
-Use fetch() to get user data from https://jsonplaceholder.typicode.com/users.
+### `npm run eject`
 
-Store this in state using useState.
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-Display each user's name and email, plus a button or link to view more.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Use Link from React Router to navigate to /users/:id.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-Step 4: Build the User Profile Page
-Use useParams to extract the id from the URL.
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-Fetch that user's details from the API using that id.
+## Learn More
 
-Show basic info like name, email, address, company, etc.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-Add a loading state while data is being fetched.
-
-Step 5: Build the Add User Page
-Create a form with fields: name, email, age.
-
-Use react-hook-form for managing form state easily.
-
-Use zod for validation:
-
-Name: required
-
-Email: must be valid
-
-Age: must be 18 or older
-
-On submit, add the new user to your local state or context.
-
-Step 6: Manage Global State (Optional)
-If you want the added user to appear on the home page:
-
-Use Context API to store a global list of users (from API + new ones).
-
-Or use useReducer to manage user state and actions like "ADD_USER".
-
-Step 7: Add TypeScript Types
-Create an interface for User (id, name, email, age).
-
-Use these types for props, state, form data, etc.
-
-You can also define enums for user roles like Admin, Editor, Viewer.
-
-🔥 Bonus (Optional)
-Search Filter: Let users search for a name in the list.
-
-Dark/Light Theme: Use Context to manage a toggle between themes.
-
-Custom Hook: Write useUserForm to isolate form logic and reuse it.
+To learn React, check out the [React documentation](https://reactjs.org/).
