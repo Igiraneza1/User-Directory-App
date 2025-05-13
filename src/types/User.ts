@@ -28,7 +28,7 @@ export interface User {
 export interface UserFormData {
   name: string;
   email: string;
-  age: number;
+  age: number|string;
 }
 
 export const userFormSchema = z.object({

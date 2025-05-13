@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import UserProfile from "./pages/UserProfile";
-import AddUser from "./pages/AddUser";
-import NavBar from "./components'/NavBar";
+import Home from "./components/Home";
+import UserProfile from "./components/Profile";
+import AddUser from "./components/AddUser";
+import NavBar from "./components/NavBar";
 
 const App = () => {
   return (
