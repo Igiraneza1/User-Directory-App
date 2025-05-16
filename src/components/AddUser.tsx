@@ -1,82 +1,76 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { UserFormData } from "../types/User";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userFormSchema, UserFormData, User } from "../types/User";
 
 const LOCAL_STORAGE_KEY = "addedUsers";
 
-const Home = () => {
-  const [users, setUsers] = useState<UserFormData[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
+const AddUser = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<UserFormData>({
+    resolver: zodResolver(userFormSchema),
+  });
 
-  useEffect(() => {
+  const [storageError, setStorageError] = useState<string | null>(null);
+
+  const onSubmit = (data: UserFormData) => {
     try {
       const storedUsers = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (storedUsers) {
-        const parsedUsers = JSON.parse(storedUsers);
-        if (Array.isArray(parsedUsers)) {
-          setUsers(parsedUsers);
-        } else {
-          console.error("Invalid user data format.");
-        }
-      }
+      const parsedUsers: User[] = storedUsers ? JSON.parse(storedUsers) : [];
+
+      const newUser: User = {
+        ...data,
+        id: Date.now(), 
+      };
+
+      const updatedUsers = [...parsedUsers, newUser];
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedUsers));
+      reset();
     } catch (error) {
-      console.error("Failed to load users from localStorage", error);
-    } finally {
-      setLoading(false);
+      setStorageError("Failed to save user.");
     }
-  }, []);
-
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (loading) return <div>Loading...</div>;
+  };
 
   return (
-    <main style={{ padding: "20px" }}>
-      <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-        <h1>User Directory</h1>
-      </header>
+    <main className="min-h-screen bg-slate-200 flex items-center justify-center py-10 px-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-lg bg-white shadow-xl rounded-lg p-6 space-y-4 border border-gray-300"
+      >
+        <h2 className="text-xl font-bold text-center text-slate-700 mb-4">Add New User</h2>
 
-      <section style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          placeholder="Search users"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ padding: "8px", width: "100%", maxWidth: "300px" }}
-        />
-      </section>
+        <div className="space-y-2 flex flex-col gap-3">
+          <input {...register("name")} placeholder="Name" />
+          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
 
-      {filteredUsers.length === 0 ? (
-        <p>No users found.</p>
-      ) : (
-        <section style={{ display: "grid", gap: "16px", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))" }}>
-          {filteredUsers.map((user, index) => (
-            <div
-              key={index}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "16px",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <h3>{user.name}</h3>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Age:</strong> {user.age}</p>
-              <Link to={`/users/${index}`}>
-                <button style={{ marginTop: "10px", padding: "6px 12px", cursor: "pointer" }}>
-                  View Profile
-                </button>
-              </Link>
-            </div>
-          ))}
-        </section>
-      )}
+          <input {...register("email")} placeholder="Email" />
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+          <input {...register("address.city")} placeholder="City"  />
+          {errors.address?.city && <p className="text-red-500">{errors.address.city.message}</p>}
+          <input {...register("address.zipcode")} placeholder="Zipcode" />
+          <input {...register("phone")} placeholder="Phone"  />
+          <input {...register("website")} placeholder="Website"  />
+          <input {...register("company.name")} placeholder="Company Name"  />
+          <input {...register("company.catchPhrase")} placeholder="Catch Phrase" />
+          <input {...register("company.bs")} placeholder="Business" />
+          <input {...register("age")} type="number" placeholder="Age"  />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-200"
+        >
+          Add User
+        </button>
+
+        {storageError && <p className="text-red-500 text-sm">{storageError}</p>}
+      </form>
     </main>
   );
 };
 
-export default Home;
+export default AddUser;
